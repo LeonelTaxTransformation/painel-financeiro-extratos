@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Financeiro • Extratos Bancários</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.plot.ly/plotly-3.4.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><span>3T</span></div>
+        <div>
+          <h1>Painel Financeiro</h1>
+          <small>Extrato financeiro dos bancos • Visual interativo para compartilhamento</small>
+        </div>
+      </div>
+      <div class="badge">GitHub Pages Ready</div>
+    </header>
+
+    <section class="hero">
+      <div class="panel hero-copy">
+        <div class="eyebrow">Inteligência financeira</div>
+        <h2>Evolução de saldo final por empresa</h2>
+        <p>
+          Compare empresas por período, filtre rapidamente quais linhas deseja visualizar
+          e clique em qualquer ponto do gráfico para abrir a composição do valor com
+          resumo por descrição e lançamentos do período.
+        </p>
+      </div>
+
+      <div class="panel hero-info">
+        <div class="metric">
+          <div class="label">Empresas localizadas</div>
+          <div class="value" id="metric-empresas">-</div>
+          <div class="sub">A leitura atual encontrou as empresas disponíveis no Excel.</div>
+        </div>
+        <div class="metric">
+          <div class="label">Períodos no painel</div>
+          <div class="value" id="metric-periodos">-</div>
+          <div class="sub" id="metric-janela">-</div>
+        </div>
+        <div class="metric">
+          <div class="label">Total do último período</div>
+          <div class="value" id="metric-ultimo-total">-</div>
+          <div class="sub">Soma das empresas no período mais recente da base.</div>
+        </div>
+        <div class="metric">
+          <div class="label">Maior saldo da base</div>
+          <div class="value" id="metric-maior-ponto">-</div>
+          <div class="sub" id="metric-maior-ponto-sub">-</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel filters">
+      <div class="filters-head">
+        <div class="filters-title">Empresas para comparar</div>
+        <div class="filter-actions">
+          <button class="filter-btn" id="select-all">Selecionar todas</button>
+          <button class="filter-btn" id="clear-all">Limpar seleção</button>
+        </div>
+      </div>
+      <div class="chips" id="company-filters"></div>
+    </section>
+
+    <section class="panel chart-panel">
+      <div class="chart-title">
+        <div>
+          <h3>Evolução mensal / anual</h3>
+          <div class="chart-sub">Gráfico em linha • Clique em um ponto para expandir os detalhes</div>
+        </div>
+      </div>
+      <div id="chart"></div>
+    </section>
+
+    <section class="bottom">
+      <div class="panel detail-panel">
+        <div class="section-title">Detalhe do ponto selecionado</div>
+        <div id="detail-content"></div>
+      </div>
+
+      <div class="panel table-panel">
+        <div class="section-title">Composição por descrição</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Descrição</th>
+                <th class="number">Qtde</th>
+                <th class="number">Valor</th>
+              </tr>
+            </thead>
+            <tbody id="agg-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel table-panel" style="margin-top:18px">
+      <div class="section-title">Lançamentos do período</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Seção</th>
+              <th class="number">Valor</th>
+            </tr>
+          </thead>
+          <tbody id="raw-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="footer">Base gerada automaticamente em <span id="updated-at"></span></div>
+  </div>
+
+  <script src="./data.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
