@@ -1,1 +1,33 @@
-/* style omitted for brevity */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f14;
+  color: #fff;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+.panel {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  background: #00c3ff;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+#chart {
+  height: 400px;
+}
