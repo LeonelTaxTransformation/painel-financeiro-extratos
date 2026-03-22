@@ -11,115 +11,118 @@
   <script src="https://cdn.plot.ly/plotly-3.4.0.min.js"></script>
 </head>
 <body>
-  <div class="container">
+  <div class="page">
     <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark"><span>3T</span></div>
+      <div class="brand-wrap">
+        <div class="brand-mark">3T</div>
         <div>
-          <h1>Painel Financeiro</h1>
-          <small>Extrato financeiro dos bancos • Visual interativo para compartilhamento</small>
+          <div class="brand-overline">Painel Financeiro</div>
+          <h1>Saldo final por empresa</h1>
         </div>
       </div>
-      <div class="badge">GitHub Pages Ready</div>
+      <div class="top-badge">Extratos bancários</div>
     </header>
 
-    <section class="hero">
-      <div class="panel hero-copy">
-        <div class="eyebrow">Inteligência financeira</div>
-        <h2>Evolução de saldo final por empresa</h2>
-        <p>
-          Compare empresas por período, filtre rapidamente quais linhas deseja visualizar
-          e clique em qualquer ponto do gráfico para abrir a composição do valor com
-          resumo por descrição e lançamentos do período.
-        </p>
-      </div>
-
-      <div class="panel hero-info">
-        <div class="metric">
-          <div class="label">Empresas localizadas</div>
-          <div class="value" id="metric-empresas">-</div>
-          <div class="sub">A leitura atual encontrou as empresas disponíveis no Excel.</div>
-        </div>
-        <div class="metric">
-          <div class="label">Períodos no painel</div>
-          <div class="value" id="metric-periodos">-</div>
-          <div class="sub" id="metric-janela">-</div>
-        </div>
-        <div class="metric">
-          <div class="label">Total do último período</div>
-          <div class="value" id="metric-ultimo-total">-</div>
-          <div class="sub">Soma das empresas no período mais recente da base.</div>
-        </div>
-        <div class="metric">
-          <div class="label">Maior saldo da base</div>
-          <div class="value" id="metric-maior-ponto">-</div>
-          <div class="sub" id="metric-maior-ponto-sub">-</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel filters">
-      <div class="filters-head">
-        <div class="filters-title">Empresas para comparar</div>
-        <div class="filter-actions">
-          <button class="filter-btn" id="select-all">Selecionar todas</button>
-          <button class="filter-btn" id="clear-all">Limpar seleção</button>
-        </div>
-      </div>
-      <div class="chips" id="company-filters"></div>
-    </section>
-
-    <section class="panel chart-panel">
-      <div class="chart-title">
+    <section class="chart-shell">
+      <div class="chart-header">
         <div>
-          <h3>Evolução mensal / anual</h3>
-          <div class="chart-sub">Gráfico em linha • Clique em um ponto para expandir os detalhes</div>
+          <div class="section-kicker">Evolução mensal / anual</div>
+          <h2>Saldo final — comparação entre empresas</h2>
+          <p>
+            O gráfico principal fica no topo. A seleção de empresas fica logo abaixo.
+            Clique em qualquer ponto para abrir a composição do período.
+          </p>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Empresas</span>
+            <strong id="metric-empresas">-</strong>
+            <small id="metric-janela">-</small>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Último período</span>
+            <strong id="metric-ultimo-periodo">-</strong>
+            <small id="metric-ultimo-total">-</small>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Maior saldo</span>
+            <strong id="metric-maior">-</strong>
+            <small id="metric-maior-sub">-</small>
+          </div>
         </div>
       </div>
-      <div id="chart"></div>
+
+      <div class="chart-card">
+        <div id="chart"></div>
+      </div>
     </section>
 
-    <section class="bottom">
-      <div class="panel detail-panel">
-        <div class="section-title">Detalhe do ponto selecionado</div>
-        <div id="detail-content"></div>
+    <section class="filter-shell">
+      <div class="filter-title-row">
+        <div>
+          <div class="section-kicker">Filtros</div>
+          <h3>Empresas para exibir no gráfico</h3>
+          <p>Cada linha representa uma empresa. Marque ou desmarque para comparar.</p>
+        </div>
+
+        <div class="filter-actions">
+          <button id="select-all" class="action-btn">Selecionar todas</button>
+          <button id="clear-all" class="action-btn action-btn--ghost">Limpar</button>
+        </div>
       </div>
 
-      <div class="panel table-panel">
-        <div class="section-title">Composição por descrição</div>
+      <div id="company-filters" class="company-list"></div>
+    </section>
+
+    <section class="details-grid">
+      <article class="detail-card">
+        <div class="section-kicker">Detalhe do ponto</div>
+        <h3 id="detail-title">Clique em um ponto do gráfico</h3>
+        <div id="detail-meta" class="detail-meta">
+          Os detalhes do período selecionado aparecerão aqui.
+        </div>
+      </article>
+
+      <article class="detail-card">
+        <div class="section-kicker">Composição por descrição</div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Descrição</th>
-                <th class="number">Qtde</th>
-                <th class="number">Valor</th>
+                <th class="num">Qtde</th>
+                <th class="num">Valor</th>
               </tr>
             </thead>
-            <tbody id="agg-body"></tbody>
+            <tbody id="agg-body">
+              <tr><td colspan="3" class="empty">Selecione um ponto no gráfico.</td></tr>
+            </tbody>
           </table>
         </div>
-      </div>
+      </article>
     </section>
 
-    <section class="panel table-panel" style="margin-top:18px">
-      <div class="section-title">Lançamentos do período</div>
-      <div class="table-wrap">
+    <section class="detail-card detail-card--full">
+      <div class="section-kicker">Lançamentos do período</div>
+      <div class="table-wrap table-wrap--large">
         <table>
           <thead>
             <tr>
               <th>Data</th>
               <th>Descrição</th>
               <th>Seção</th>
-              <th class="number">Valor</th>
+              <th class="num">Valor</th>
             </tr>
           </thead>
-          <tbody id="raw-body"></tbody>
+          <tbody id="raw-body">
+            <tr><td colspan="4" class="empty">Selecione um ponto no gráfico.</td></tr>
+          </tbody>
         </table>
       </div>
     </section>
-
-    <div class="footer">Base gerada automaticamente em <span id="updated-at"></span></div>
   </div>
 
   <script src="./data.js"></script>
